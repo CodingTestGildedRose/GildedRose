@@ -20,7 +20,9 @@ public class ItemDAOTest {
 
 	@Test
 	public void testBuy() {
-		assertNotNull(itemDao.buy("shoes"));
+		String item = itemDao.buy("shoes");
+		assertNotNull(item);
+		assertEquals(item,"shoes");
 	}
 
 }

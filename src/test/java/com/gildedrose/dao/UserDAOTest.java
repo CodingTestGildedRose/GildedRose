@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.gildedrose.model.Item;
 import com.gildedrose.model.User;
 
 public class UserDAOTest {
@@ -18,7 +19,7 @@ public class UserDAOTest {
 	public void setUp() throws Exception {
 		userdao = new UserDAO();
 		itemDao = new ItemDAO();
-
+		
 	}
 
 	@Test
@@ -29,17 +30,23 @@ public class UserDAOTest {
 
 	@Test
 	public void testGet() {
-		assertNotNull(userdao.get((long) 101));
+		User user =userdao.get((long) 101);
+		assertNotNull(user);
+		assertEquals(user.getUserName(),"JohnDoe");
 	}
 
 	@Test
 	public void testAuthenticate() {
-		assertNotNull(userdao.authenticate("RussSmith", "password2"));
+		ArrayList<Item> items =userdao.authenticate("RussSmith", "password2");
+		assertNotNull(items);
+		assertEquals(items.get(0).getName(), "shoes");
 	}
 
 	@Test
 	public void testCreate() {
-		assertNotNull(userdao.create(new User("JohnSmith",401,"password3", "John", "Smith", "sjohn@gmail.com")));
+		User user =userdao.create(new User("JohnSmith",401,"password3", "John", "Smith", "sjohn@gmail.com"));
+		assertNotNull(user);
+		assertEquals(user.getFirstName(), "John");
 	}
 
 	@Test
@@ -49,7 +56,9 @@ public class UserDAOTest {
 
 	@Test
 	public void testUpdate() {
-		userdao.update((long)401, new User("RobSmith",401,"password3", "Rob", "Smith", "srob@gmail.com"));
+		User user =userdao.update((long)101, new User("RobSmith",101,"password3", "Rob", "Smith", "srob@gmail.com"));
+		assertNotNull(user);
+		assertEquals(user.getFirstName(),"Rob");
 	}
 
 }
